@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NFL Elo Predictor</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>NFL Elo Predictor</h1>
+
+    <section class="card">
+      <h2>Matchup</h2>
+      <div class="row">
+        <label for="home">Home Team (e.g., PHI, DAL, KC)</label>
+        <input type="text" id="home" placeholder="Enter team code" value="PHI" />
+      </div>
+      <div class="row">
+        <label for="away">Away Team (e.g., PHI, DAL, KC)</label>
+        <input type="text" id="away" placeholder="Enter team code" value="DAL" />
+      </div>
+      <button id="predictBtn">Predict</button>
+      <div id="result" class="result"></div>
+    </section>
+
+    <section class="card">
+      <h2>Retune</h2>
+      <div class="row">
+        <button id="quickRetune">Quick Retune</button>
+        <button id="fullRetune">Full Retune</button>
+      </div>
+      <div id="retuneStatus" class="status"></div>
+    </section>
+
+    <section class="card">
+      <h2>Available Teams</h2>
+      <div id="teamsList" class="teams-list"></div>
+    </section>
+  </div>
+
+  <script src="/script.js"></script>
+  <script>
+    // Load and display available teams
+    async function loadTeams() {
+      try {
+        const res = await fetch('/teams');
+        const teams = await res.json();
+        const teamsList = document.getElementById('teamsList');
+        teamsList.innerHTML = teams.join(', ');
+      } catch (e) {
+        document.getElementById('teamsList').innerHTML = 'Error loading teams';
+      }
+    }
+    loadTeams();
+  </script>
+</body>
+</html>
